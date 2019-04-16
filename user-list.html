@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>User list</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+	<div id="app">
+	<user-table v-bind:users="list"></user-table>
+	</div>
+	<template id="user-table">
+		<table class="table">
+			<tr v-for="(item, index) in users" v-bind:key="item.id">
+				<td>{{ item.name }}</td>
+					<td>{{ item.username }}</td>
+					<td>{{ item.phone }}</td>
+					<td>{{ item.address.zipcode }}</td>
+					<td>{{ item.email }}</td>
+					
+					
+			</tr>
+		</table>
+	</template>
+	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+    <script>
+	
+		
+		var UserTable = {
+			template: "#user-table",
+			props: {
+				users: {
+					type: Array,
+					required: true
+				}
+			},
+			data: function() {
+				return {
+					count: 0
+				}
+			},
+			methods: {
+		
+			}
+		}
+		
+
+		 window.app = new Vue({
+            el: '#app',
+			components: {
+		
+				'user-table': UserTable
+			},
+            data: function () {
+                return {
+					condition: true,
+                    list: [],
+				    count: 5,
+                }
+            },
+			computed: {
+			
+			},
+			watch: {
+				 list: function() {
+						console.log('Список загружен', this.list)
+					  },
+			},
+            mounted: function () {
+               this.loadUsers()
+            },
+            methods: {
+			
+				loadUsers: function () {
+					var self = this
+					
+					axios.get("https://jsonplaceholder.typicode.com/users")
+		
+					.then((response) => (
+						this.list = response.data))
+					.catch(error => console.error(error))
+				
+				},
+				
+				loadedMessage: function () {
+					console.log('users are loaded')
+				},
+            }
+
+        
+        })
+		
+	
+	</script>
+	</body>
+</html>

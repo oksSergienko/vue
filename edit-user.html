@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Edit user</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+	<div id="app">
+	
+	<user-edit v-bind:users="list"></user-edit>
+	</div>
+
+	<template id="user-edit">
+		<table class="table">
+			<tr v-for="(item, index) in users" v-bind:key="item.id">
+				<td><input type="text" :v-bind:value=item.name :placeholder=item.name /></td>
+					<td><input type="text" :v-bind:value=item.username :placeholder=item.username /> </td>
+					<td><input type="text" :v-bind:value=item.phone :placeholder=item.phone /> </td>
+					<td><input type="text" :v-bind:value=item.address.zipcode :placeholder=item.address.zipcode /> </td>
+					<td><input type="text" :v-bind:value=item.email :placeholder=item.email /> </td>
+					<td><button type="button">Save</button></td>
+					
+			</tr>
+		</table>
+	</template>
+	
+	
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+    <script>
+	
+		
+		var UserEdit = {
+			template: "#user-edit",
+				props: {
+				users: {
+					type: Array,
+					required: true
+				}
+			},
+	
+		}
+		
+
+		 window.app = new Vue({
+            el: '#app',
+			components: {
+		
+				'user-edit': UserEdit
+			},
+            data: function () {
+                return {
+					condition: true,
+                    list: [],
+				    count: 5,
+		
+                }
+            },
+			computed: {
+			
+			},
+			watch: {
+
+			},
+            mounted: function () {
+               this.loadUsers()
+            },
+            methods: {
+			
+				loadUsers: function () {
+					var self = this
+					
+					axios.get("https://jsonplaceholder.typicode.com/users")
+		
+					.then((response) => (
+						this.list = response.data))
+					.catch(error => console.error(error))
+				
+				},
+				
+				loadedMessage: function () {
+					console.log('users are loaded')
+				},
+            }
+
+        
+        })
+		
+	
+	</script>
+	</body>
+</html>
