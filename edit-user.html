@@ -59,12 +59,6 @@
 		
                 }
             },
-			computed: {
-			
-			},
-			watch: {
-
-			},
             mounted: function () {
                this.loadUsers()
             },
@@ -75,10 +69,10 @@
 					
 					axios.get("https://jsonplaceholder.typicode.com/users")
 		
-					.then((response) => (
-						this.list = response.data))
-					.catch(error => console.error(error))
-				
+					.then(function(response){
+						const users = response.data
+						self.list = users
+					})
 				},
 				
 				loadedMessage: function () {
