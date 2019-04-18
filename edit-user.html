@@ -14,7 +14,7 @@
 
 	<template id="user-edit">
 		<table class="table">
-			<tr v-for="(item, index) in users" v-bind:key="item.id">
+			<tr v-for="item in users" v-bind:key="item.id">
 				<td><input type="text" :v-bind:value=item.name :placeholder=item.name /></td>
 					<td><input type="text" :v-bind:value=item.username :placeholder=item.username /> </td>
 					<td><input type="text" :v-bind:value=item.phone :placeholder=item.phone /> </td>

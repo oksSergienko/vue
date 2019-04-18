@@ -8,11 +8,13 @@
 	</head>
 	<body>
 	<div id="app">
-	<user-table v-bind:users="list"></user-table>
+	<div v-if="!list.length"> Loading... </div>
+	
+	<user-table v-else v-bind:users="list"></user-table>
 	</div>
 	<template id="user-table">
 		<table class="table">
-			<tr v-for="(item, index) in users" v-bind:key="item.id">
+			<tr v-for="item in users" v-bind:key="item.id">
 				<td>{{ item.name }}</td>
 					<td>{{ item.username }}</td>
 					<td>{{ item.phone }}</td>
@@ -38,14 +40,6 @@
 					required: true
 				}
 			},
-			data: function() {
-				return {
-					count: 0
-				}
-			},
-			methods: {
-		
-			}
 		}
 		
 
@@ -58,13 +52,9 @@
             data: function () {
                 return {
 					condition: true,
-                    list: [],
-				    count: 5,
+                    list: []
                 }
             },
-			computed: {
-			
-			},
 			watch: {
 				 list: function() {
 						console.log('Список загружен', this.list)
@@ -90,8 +80,6 @@
 					console.log('users are loaded')
 				},
             }
-
-        
         })
 		
 	
